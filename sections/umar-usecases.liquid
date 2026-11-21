@@ -1,0 +1,165 @@
+<div class="u-section">
+  <div class="u-wrap">
+    <div class="u-sechead">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="u-eyebrow">{{ section.settings.eyebrow }}</span>
+        {%- endif -%}
+        <h2 class="u-h2">{{ section.settings.heading }}</h2>
+        {%- if section.settings.subtext != blank -%}
+          <p>{{ section.settings.subtext }}</p>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.view_all_label != blank -%}
+        <a class="u-linkarrow" href="{{ routes.all_products_collection_url }}">
+          {{- section.settings.view_all_label | escape -}}
+          {% render 'umar-icon', name: 'arrow' %}
+        </a>
+      {%- endif -%}
+    </div>
+
+    <div class="u-usecases">
+      {%- for block in section.blocks -%}
+        {%- assign uc_url = block.settings.link | default: routes.all_products_collection_url -%}
+        <a class="u-uc" href="{{ uc_url }}" {{ block.shopify_attributes }}>
+          <span class="u-pill{% if block.settings.highlight %} u-pill--lime{% endif %}">
+            <i></i>{{ block.settings.tag | escape }}
+          </span>
+          <h3>{{ block.settings.title | escape }}</h3>
+          <p>{{ block.settings.text | escape }}</p>
+          <span class="u-uc__link">
+            <span>
+              {{- block.settings.link_label | default: 'Shop now' | escape -}}
+              {% render 'umar-icon', name: 'arrow' %}
+            </span>
+            {%- if block.settings.price != blank -%}
+              <span class="u-uc__price">{{ block.settings.price | escape }}</span>
+            {%- endif -%}
+          </span>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Umar use cases",
+  "tag": "section",
+  "class": "umar-section",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Shop by need"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Tell us the job. We'll match the machine."
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Every category is stocked with units we would use ourselves — and each one can be checked live before you buy."
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "View-all label",
+      "default": "Browse all stock"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "case",
+      "name": "Use case",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Tag",
+          "default": "Gaming"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "High-refresh gaming"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "RTX graphics, 144Hz panels and cooling that holds up past hour three."
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Link label",
+          "default": "Shop gaming"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price hint",
+          "default": "from Rs 145,000"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight",
+          "label": "Highlight tag",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Umar use cases",
+      "blocks": [
+        {
+          "type": "case",
+          "settings": {
+            "tag": "Gaming",
+            "title": "High-refresh gaming",
+            "text": "RTX graphics, 144Hz panels and cooling that holds up past hour three.",
+            "link_label": "Shop gaming",
+            "price": "from Rs 145,000",
+            "highlight": true
+          }
+        },
+        {
+          "type": "case",
+          "settings": {
+            "tag": "Business",
+            "title": "Work all day",
+            "text": "ThinkPads and EliteBooks with 8+ hour batteries, backlit keys and full port sets.",
+            "link_label": "Shop business",
+            "price": "from Rs 62,000"
+          }
+        },
+        {
+          "type": "case",
+          "settings": {
+            "tag": "Students",
+            "title": "Campus-ready",
+            "text": "Light, fast and easy on the budget — with genuine Windows already installed.",
+            "link_label": "Shop student picks",
+            "price": "from Rs 45,000"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,101 @@
+<div class="u-section u-section--tight">
+  <div class="u-wrap u-wrap--pdp">
+    <product-recommendations
+      class="u-related"
+      data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ section.settings.products_to_show }}&intent=related"
+    >
+      {%- if recommendations.performed and recommendations.products_count > 0 -%}
+        <div class="u-subhead">
+          <div>
+            <span class="u-eyebrow">{{ section.settings.eyebrow }}</span>
+            <h2>{{ section.settings.heading }}</h2>
+          </div>
+          {%- if section.settings.link_label != blank -%}
+            <a class="u-linkarrow" href="{{ routes.all_products_collection_url }}">
+              {{- section.settings.link_label | escape -}}
+              {% render 'umar-icon', name: 'arrow' %}
+            </a>
+          {%- endif -%}
+        </div>
+
+        <div class="u-relgrid">
+          {%- for recommendation in recommendations.products -%}
+            {%- liquid
+              assign r_cpu = recommendation.metafields.specs.cpu.value
+              assign r_ram = recommendation.metafields.specs.ram.value
+              assign r_battery = recommendation.metafields.health.battery.value
+              assign r_condition = recommendation.metafields.specs.condition.value
+            -%}
+            <a class="u-rel" href="{{ recommendation.url }}">
+              <div class="u-rel__media">
+                {%- if recommendation.featured_media -%}
+                  {{
+                    recommendation.featured_media
+                    | image_url: width: 540
+                    | image_tag:
+                      loading: 'lazy',
+                      widths: '270,405,540',
+                      sizes: '(min-width: 990px) 30vw, 90vw',
+                      alt: recommendation.featured_media.alt
+                  }}
+                {%- else -%}
+                  <span class="u-card__placeholder">{% render 'umar-icon', name: 'laptop' %}</span>
+                {%- endif -%}
+              </div>
+              <div class="u-rel__b">
+                <h5>{{ recommendation.title | escape }}</h5>
+                <div class="u-chips">
+                  {%- if r_cpu != blank -%}<span class="u-chip">{{ r_cpu }}</span>{%- endif -%}
+                  {%- if r_ram != blank -%}<span class="u-chip">{{ r_ram }}</span>{%- endif -%}
+                  {%- if r_battery != blank -%}<span class="u-chip">Battery {{ r_battery }}%</span>{%- endif -%}
+                  {%- if r_condition != blank -%}<span class="u-chip">{{ r_condition }}</span>{%- endif -%}
+                </div>
+                <div class="u-rel__f">
+                  <b>{{ recommendation.price | money }}</b>
+                  {% render 'umar-icon', name: 'arrow' %}
+                </div>
+              </div>
+            </a>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </product-recommendations>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Umar related products",
+  "tag": "section",
+  "class": "umar-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Also verified"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "More laptops with the same bench report."
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Link label",
+      "default": "View all stock"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to show",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 3
+    }
+  ]
+}
+{% endschema %}

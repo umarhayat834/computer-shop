@@ -1,0 +1,84 @@
+{%- comment -%}
+  Inline stroke icon set for the Umar sections.
+
+  Accepts:
+  - name: {String} Icon id (see list below)
+
+  Usage:
+  {% render 'umar-icon', name: 'battery' %}
+{%- endcomment -%}
+{%- liquid
+  assign icon_name = name | default: 'check'
+-%}
+{%- case icon_name -%}
+  {%- when 'arrow' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12h15"/><path d="m13 6 6 6-6 6"/></svg>
+  {%- when 'external' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 11 13"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>
+  {%- when 'check' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>
+  {%- when 'cpu' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4.5" y="4.5" width="15" height="15" rx="2.5"/><rect x="9" y="9" width="6" height="6" rx="1"/><path d="M9 2v2.5M15 2v2.5M9 19.5V22M15 19.5V22M2 9h2.5M2 15h2.5M19.5 9H22M19.5 15H22"/></svg>
+  {%- when 'gpu' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="6" width="13" height="10" rx="2"/><circle cx="9.5" cy="11" r="2.4"/><path d="M16 9h3.5a1 1 0 0 1 1 1v6.5a1 1 0 0 1-1 1H16"/><path d="M7 16v3M11 16v3"/></svg>
+  {%- when 'ram' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2.5" y="7.5" width="19" height="8" rx="1.8"/><path d="M6.5 15.5V19M10.5 15.5V19M14.5 15.5V19M18.5 15.5V19"/><path d="M6.5 11h2M11 11h2M15.5 11h2"/></svg>
+  {%- when 'ssd' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="6" width="17" height="12" rx="2"/><circle cx="8" cy="12" r="1"/><path d="M13.5 9.5h3.5M13.5 12h3.5M13.5 14.5h3.5"/></svg>
+  {%- when 'monitor' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="4.5" width="18" height="12" rx="2"/><path d="M8.5 20h7M12 16.5V20"/></svg>
+  {%- when 'battery' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2.5" y="7.5" width="16" height="9" rx="2.2"/><path d="M21.5 10.5v3"/><path d="M6 11v2M9 11v2M12 11v2"/></svg>
+  {%- when 'keyboard' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2.5" y="6.5" width="19" height="11" rx="2"/><path d="M6.5 10.5h.01M10 10.5h.01M13.5 10.5h.01M17 10.5h.01M8 14h8"/></svg>
+  {%- when 'ports' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2.5" y="8.5" width="7" height="7" rx="1.6"/><rect x="14.5" y="8.5" width="7" height="7" rx="1.6"/><path d="M9.5 12h5"/></svg>
+  {%- when 'weight' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3.5 20.5h17"/><path d="m6.5 20.5 2.2-9.5h6.6l2.2 9.5"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/></svg>
+  {%- when 'shield' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3 19 6v5.2c0 4.9-3.4 8.2-7 9.8-3.6-1.6-7-4.9-7-9.8V6z"/><path d="m9 12 2 2 4-4"/></svg>
+  {%- when 'lock' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4.5" y="10.5" width="15" height="10" rx="2.2"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/><path d="M12 14.5v2"/></svg>
+  {%- when 'truck' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2.5 6.5h11v10h-11z"/><path d="M13.5 9.5h3.7l3.3 3.4v3.6h-7"/><circle cx="6.5" cy="18.5" r="1.9"/><circle cx="17.5" cy="18.5" r="1.9"/></svg>
+  {%- when 'refresh' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.5 11.5a8.5 8.5 0 0 0-14.6-4.3L3.5 9.5"/><path d="M3.5 4.5v5h5"/><path d="M3.5 12.5a8.5 8.5 0 0 0 14.6 4.3l2.4-2.3"/><path d="M20.5 19.5v-5h-5"/></svg>
+  {%- when 'headset' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="2.5" y="13.5" width="4" height="6.5" rx="1.4"/><rect x="17.5" y="13.5" width="4" height="6.5" rx="1.4"/><path d="M19.5 20a3 3 0 0 1-3 2H13"/></svg>
+  {%- when 'star' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 3.5 2.6 5.4 5.9.8-4.3 4.1 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.7l5.9-.8z"/></svg>
+  {%- when 'bolt' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M13.5 2.5 4.5 14h6l-1 7.5 9-11.5h-6z"/></svg>
+  {%- when 'wifi' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4.5 10.5a11 11 0 0 1 15 0"/><path d="M8 14a6.4 6.4 0 0 1 8 0"/><path d="M11 17.3a2 2 0 0 1 2 0"/><circle cx="12" cy="19.5" r=".7" fill="currentColor"/></svg>
+  {%- when 'gamepad' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 8.5h8a4.5 4.5 0 0 1 4.5 4.5v2a2.2 2.2 0 0 1-3.8 1.4l-2.3-2.4h-4.8l-2.3 2.4A2.2 2.2 0 0 1 3.5 15v-2A4.5 4.5 0 0 1 8 8.5z"/><path d="M7.5 11v2.5M6.2 12.2h2.6"/><path d="M16 11.5h.01M18 13.5h.01"/></svg>
+  {%- when 'chart' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 20V11M10 20V5M16 20v-6M22 20H2"/></svg>
+  {%- when 'layers' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/></svg>
+  {%- when 'search' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg>
+  {%- when 'spark' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"/></svg>
+  {%- when 'clock' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>
+  {%- when 'phone' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.5 16.6v2.6a1.8 1.8 0 0 1-2 1.8 17.8 17.8 0 0 1-7.8-2.8 17.5 17.5 0 0 1-5.4-5.4A17.8 17.8 0 0 1 2.5 5a1.8 1.8 0 0 1 1.8-2h2.6a1.8 1.8 0 0 1 1.8 1.6c.1 1 .4 1.9.7 2.8a1.8 1.8 0 0 1-.4 1.9L8 10.4a14 14 0 0 0 5.6 5.6l1.1-1.1a1.8 1.8 0 0 1 1.9-.4c.9.3 1.8.6 2.8.7a1.8 1.8 0 0 1 1.6 1.8z"/></svg>
+  {%- when 'play' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 5.5v13l10-6.5z"/></svg>
+  {%- when 'cart' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 4h2l2.3 10.6a1.2 1.2 0 0 0 1.2 1H18a1.2 1.2 0 0 0 1.2-.9L21 7H6"/><circle cx="9.5" cy="19" r="1.4"/><circle cx="17.5" cy="19" r="1.4"/></svg>
+  {%- when 'tag' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 12.6 12.6 20 4 11.4V4h7.4z"/><circle cx="8.4" cy="7.6" r="1.2"/></svg>
+  {%- when 'flame' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 2.8c.9 3 4.4 4.6 4.4 8.4a4.4 4.4 0 0 1-8.8 0c0-1.6.7-2.7 1.6-3.7.9-1 2-2.2 2.8-4.7z"/><path d="M12 21.2a6 6 0 0 0 6-6"/></svg>
+  {%- when 'download' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3.5V15"/><path d="m7 10 5 5 5-5"/><path d="M4 20.5h16"/></svg>
+  {%- when 'laptop' -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4.5" y="4.5" width="15" height="10.5" rx="1.6"/><path d="M2 19h20l-2-4H4z"/></svg>
+  {%- when 'whatsapp' -%}
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 2a9.9 9.9 0 0 0-8.5 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 1.9a8.1 8.1 0 0 1 0 16.2 8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.1 8.1 0 0 1 12 3.9zm-3.2 3.8c-.2 0-.5 0-.7.3-.2.3-.9.9-.9 2.1s.9 2.5 1 2.6c.1.2 1.7 2.7 4.2 3.7 2 .8 2.5.7 2.9.6.4 0 1.3-.5 1.5-1.1.2-.5.2-1 .1-1.1 0-.1-.2-.2-.4-.3l-1.6-.8c-.2-.1-.4-.1-.6.1l-.7.9c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.2-2.8c-.1-.2 0-.4.1-.5l.4-.5c.1-.2.2-.3.2-.5v-.4l-.7-1.7c-.2-.4-.4-.4-.5-.4z"/></svg>
+  {%- else -%}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>
+{%- endcase -%}
