@@ -1,0 +1,199 @@
+{%- liquid
+  assign anydesk_id = product.metafields.verify.anydesk_id.value | default: section.settings.fallback_id
+  assign anydesk_name = product.metafields.verify.computer_name.value | default: 'UMAR'
+  assign unit = product.metafields.verify.unit.value | default: product.title
+  assign grade = product.metafields.specs.condition.value | default: section.settings.grade_fallback
+  assign checklist = section.settings.checklist | newline_to_br | split: '<br />'
+  assign verify_url = section.settings.button_link | default: 'https://wa.me/923104561634'
+-%}
+
+<div class="u-section u-section--tight" id="verify-live">
+  <div class="u-wrap u-wrap--pdp">
+    <div class="u-verify2">
+      <div>
+        <span class="u-eyebrow">Verify it live</span>
+        <h2>{{ section.settings.heading }}</h2>
+        <p class="u-verify2__lead">{{ section.settings.lead }}</p>
+        <ul class="u-checklist">
+          {%- for item in checklist -%}
+            {%- if item != blank -%}
+              <li>
+                {% render 'umar-icon', name: 'check' %}
+                {{ item | strip }}
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      <div class="u-adcard u-adcard--flat">
+        <div class="u-adcard__top">
+          <span class="u-adlogo"><i>A</i>AnyDesk</span>
+          <span class="u-pill u-pill--lime"><i></i>Ready to connect</span>
+        </div>
+
+        <div class="u-adcard__id">
+          <small>{{ unit | escape }} · AnyDesk address</small>
+          <b>{{ anydesk_id }}</b>
+          <span>{{ section.settings.anydesk_caption }}</span>
+        </div>
+
+        <div class="u-devrow">
+          <span>Computer name</span>
+          <b>{{ anydesk_name }}</b>
+        </div>
+        <div class="u-devrow">
+          <span>Session</span>
+          <b>{{ section.settings.session_note | default: '5 minutes · no deposit' }}</b>
+        </div>
+
+        <a class="u-btn u-btn--lime" href="{{ verify_url }}" rel="noopener">
+          {{- section.settings.button_label | escape -}}
+          {% render 'umar-icon', name: 'external' %}
+        </a>
+      </div>
+    </div>
+
+    <div class="u-twocol">
+      <div class="u-panel">
+        <h4>{{ section.settings.panel_a_title }} <span>{{ grade }}</span></h4>
+        <div class="u-grade">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'row' and block.settings.panel == 'condition' -%}
+              <div {{ block.shopify_attributes }}>
+                <span>{{ block.settings.label | escape }}</span>
+                <b>{{ block.settings.value | escape }}</b>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+
+      <div class="u-panel">
+        <h4>{{ section.settings.panel_b_title }} <span>{{ section.settings.panel_b_badge }}</span></h4>
+        <div class="u-grade">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'row' and block.settings.panel == 'assurance' -%}
+              <div {{ block.shopify_attributes }}>
+                <span>{{ block.settings.label | escape }}</span>
+                <b>{{ block.settings.value | escape }}</b>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Umar condition & verify",
+  "tag": "section",
+  "class": "umar-section",
+  "max_blocks": 10,
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Inspect this exact unit over AnyDesk."
+    },
+    {
+      "type": "textarea",
+      "id": "lead",
+      "label": "Lead",
+      "default": "The ID on this page belongs to the machine in the photos — not a demo unit. Connect, open whatever you want, then decide."
+    },
+    {
+      "type": "textarea",
+      "id": "checklist",
+      "label": "Checklist (one per line)",
+      "default": "Open Task Manager and Device Manager\nRun CrystalDiskInfo for SSD hours and life\nCheck the battery report with powercfg /batteryreport\nStress the CPU and GPU for five minutes"
+    },
+    {
+      "type": "text",
+      "id": "fallback_id",
+      "label": "Fallback AnyDesk ID",
+      "default": "842 119 306"
+    },
+    {
+      "type": "text",
+      "id": "anydesk_caption",
+      "label": "AnyDesk caption",
+      "default": "Message us this ID and we connect in under 2 minutes"
+    },
+    {
+      "type": "text",
+      "id": "session_note",
+      "label": "Session note",
+      "default": "5 minutes · no deposit"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Book the AnyDesk check"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "grade_fallback",
+      "label": "Grade fallback",
+      "default": "Grade A"
+    },
+    {
+      "type": "text",
+      "id": "panel_a_title",
+      "label": "Panel A title",
+      "default": "Condition breakdown"
+    },
+    {
+      "type": "text",
+      "id": "panel_b_title",
+      "label": "Panel B title",
+      "default": "Warranty & returns"
+    },
+    {
+      "type": "text",
+      "id": "panel_b_badge",
+      "label": "Panel B badge",
+      "default": "Included"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Detail row",
+      "settings": [
+        {
+          "type": "select",
+          "id": "panel",
+          "label": "Panel",
+          "options": [
+            { "value": "condition", "label": "Condition breakdown" },
+            { "value": "assurance", "label": "Warranty & returns" }
+          ],
+          "default": "condition"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Chassis"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "default": "Grade A"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

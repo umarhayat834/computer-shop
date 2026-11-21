@@ -1,0 +1,59 @@
+{%- comment -%}
+  CSS-only laptop illustration.
+
+  Accepts:
+  - root_class: {String} Position class, e.g. "u-lap--front" (optional)
+  - variant: {String} "black" | "silver" | "space" (optional)
+  - wallpaper: {Number} 1-4, screen wallpaper (optional)
+  - hud: {Boolean} Render the on-screen spec HUD (optional)
+  - hud_title, hud_cpu, hud_cpu_note, hud_gpu, hud_gpu_note, hud_ram, hud_ram_note, hud_ssd, hud_ssd_note
+  - meter_label, meter_value, meter_pct
+
+  Usage:
+  {% render 'umar-laptop', root_class: 'u-lap--front', hud: true, hud_cpu: 'i7-12700H' %}
+{%- endcomment -%}
+<div class="u-lap {{ root_class }}{% if variant != blank %} u-lap--{{ variant }}{% endif %}">
+  <div class="u-lap__float">
+    <div class="u-lap__lid">
+      <div class="u-lap__screen u-wp{{ wallpaper | default: 1 }}">
+        {%- if hud -%}
+          <div class="u-hud">
+            <div class="u-hud__bar">
+              <span>{{ hud_title | default: 'UMAR · LIVE SPEC' }}</span>
+              <b><i></i>ONLINE</b>
+            </div>
+            <div class="u-hud__grid">
+              <div class="u-hud__cell">
+                <span>CPU</span>
+                <b>{{ hud_cpu | default: 'i7-12700H' }}</b>
+                <em>{{ hud_cpu_note | default: '14C / 20T · 4.7GHz' }}</em>
+              </div>
+              <div class="u-hud__cell">
+                <span>GPU</span>
+                <b>{{ hud_gpu | default: 'RTX 4060' }}</b>
+                <em>{{ hud_gpu_note | default: '8GB GDDR6' }}</em>
+              </div>
+              <div class="u-hud__cell">
+                <span>MEMORY</span>
+                <b>{{ hud_ram | default: '16 GB' }}</b>
+                <em>{{ hud_ram_note | default: 'DDR5 · dual channel' }}</em>
+              </div>
+              <div class="u-hud__cell">
+                <span>STORAGE</span>
+                <b>{{ hud_ssd | default: '1 TB' }}</b>
+                <em>{{ hud_ssd_note | default: 'NVMe Gen4 SSD' }}</em>
+              </div>
+            </div>
+            <div class="u-hud__meter">
+              <span>{{ meter_label | default: 'BATTERY' }}</span>
+              <span class="u-bar"><i style="width: {{ meter_pct | default: 94 }}%"></i></span>
+              <b>{{ meter_value | default: '94%' }}</b>
+            </div>
+          </div>
+        {%- endif -%}
+        <div class="u-hud__scan" aria-hidden="true"></div>
+      </div>
+    </div>
+    <div class="u-lap__base"></div>
+  </div>
+</div>

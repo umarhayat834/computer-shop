@@ -1,0 +1,149 @@
+<div class="u-section">
+  <div class="u-wrap">
+    <div class="u-sechead">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="u-eyebrow">{{ section.settings.eyebrow }}</span>
+        {%- endif -%}
+        <h2 class="u-h2">{{ section.settings.heading }}</h2>
+        {%- if section.settings.subtext != blank -%}
+          <p>{{ section.settings.subtext }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="u-features">
+      {%- for block in section.blocks -%}
+        <div class="u-feature" {{ block.shopify_attributes }}>
+          <span class="u-iconbox">{% render 'umar-icon', name: block.settings.icon %}</span>
+          <h3>{{ block.settings.title | escape }}</h3>
+          <p>{{ block.settings.text | escape }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Umar features",
+  "tag": "section",
+  "class": "umar-section",
+  "max_blocks": 9,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "What \"tested\" actually means"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Six checks before a laptop is listed."
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "No wholesale shortcuts. Every unit goes through the same bench before it reaches the store."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "battery", "label": "Battery" },
+            { "value": "ssd", "label": "SSD" },
+            { "value": "ram", "label": "RAM" },
+            { "value": "cpu", "label": "CPU" },
+            { "value": "gpu", "label": "GPU" },
+            { "value": "monitor", "label": "Screen" },
+            { "value": "keyboard", "label": "Keyboard" },
+            { "value": "ports", "label": "Ports" },
+            { "value": "wifi", "label": "Wi-Fi" },
+            { "value": "refresh", "label": "Refresh" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "bolt", "label": "Bolt" }
+          ],
+          "default": "battery"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Battery health checked"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Design capacity, cycle count and real discharge time measured and reported on the product page."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Umar features",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "battery",
+            "title": "Battery health checked",
+            "text": "Design capacity, cycle count and real discharge time measured and reported on the product page."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "ssd",
+            "title": "True SSD capacity",
+            "text": "CrystalDiskInfo readout, power-on hours and SSD life percentage — not just the sticker on the box."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "ram",
+            "title": "RAM you can trust",
+            "text": "Both sticks tested with MemTest, channel count and clock speed confirmed in BIOS."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "monitor",
+            "title": "Screen inspection",
+            "text": "Dead pixels, backlight bleed and hinge play checked on every display before listing."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "ports",
+            "title": "Every port tested",
+            "text": "USB, HDMI, Type-C, audio and charging verified with real devices, not just a visual check."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "refresh",
+            "title": "14-day returns",
+            "text": "If the machine doesn't match its report, send it back within 14 days for a full refund."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

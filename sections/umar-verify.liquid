@@ -1,0 +1,210 @@
+{%- liquid
+  assign check_url = section.settings.button_link | default: 'https://wa.me/923104561634'
+-%}
+
+<div class="u-verify" id="verify">
+  <div class="u-wrap u-verify__in">
+    <div>
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="u-eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      <h2>{{ section.settings.heading }}</h2>
+      {%- if section.settings.lead != blank -%}
+        <p class="u-verify__lead">{{ section.settings.lead }}</p>
+      {%- endif -%}
+
+      <div class="u-steps">
+        {%- assign step_i = 0 -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'step' -%}
+            {%- assign step_i = step_i | plus: 1 -%}
+            <div class="u-step" {{ block.shopify_attributes }}>
+              <b>{{ step_i }}</b>
+              <div>
+                <h3>{{ block.settings.title | escape }}</h3>
+                <p>{{ block.settings.text | escape }}</p>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <div class="u-adcard">
+      <div class="u-adcard__top">
+        <span class="u-adlogo"><i>A</i>AnyDesk</span>
+        <span class="u-pill u-pill--lime"><i></i>Session active</span>
+      </div>
+
+      <div class="u-adcard__id">
+        <small>Your AnyDesk address</small>
+        <b>{{ section.settings.anydesk_id | default: '842 119 306' }}</b>
+        <span>{{ section.settings.anydesk_caption | default: 'Share this with us — we connect in under 2 minutes' }}</span>
+      </div>
+
+      <div class="u-devrow">
+        <span>Computer name</span>
+        <b>{{ section.settings.computer_name | default: 'UMAR' }}</b>
+      </div>
+      <div class="u-devrow">
+        <span>Connected from</span>
+        <b>{{ section.settings.machine | default: 'Windows 11 · 16 GB RAM' }}</b>
+      </div>
+
+      {%- if section.settings.button_label != blank -%}
+        <a class="u-btn u-btn--lime" href="{{ check_url }}">
+          {{- section.settings.button_label | escape -}}
+          {% render 'umar-icon', name: 'external' %}
+        </a>
+      {%- endif -%}
+
+      <div class="u-adcard__specs">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'check' -%}
+            <div class="u-adrow" {{ block.shopify_attributes }}>
+              <span>{{ block.settings.label | escape }}</span>
+              <span class="u-bar"><i style="width: {{ block.settings.percent }}%"></i></span>
+              <b>{{ block.settings.value | escape }}</b>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      {%- if section.settings.note != blank -%}
+        <p class="u-adcard__note">{{ section.settings.note | escape }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Umar verify (AnyDesk)",
+  "tag": "section",
+  "class": "umar-section",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Verify before you buy"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Don't trust the listing. Trust the live machine."
+    },
+    {
+      "type": "textarea",
+      "id": "lead",
+      "label": "Lead",
+      "default": "Every laptop has its own AnyDesk ID. Book a five-minute session, connect to the exact unit, and inspect the CPU, GPU, RAM, SSD health and battery yourself — before paying."
+    },
+    {
+      "type": "text",
+      "id": "anydesk_id",
+      "label": "Sample AnyDesk ID",
+      "default": "842 119 306"
+    },
+    {
+      "type": "text",
+      "id": "anydesk_caption",
+      "label": "AnyDesk caption",
+      "default": "Share this with us — we connect in under 2 minutes"
+    },
+    {
+      "type": "text",
+      "id": "computer_name",
+      "label": "Computer name",
+      "default": "UMAR"
+    },
+    {
+      "type": "text",
+      "id": "machine",
+      "label": "Machine line",
+      "default": "Windows 11 · 16 GB RAM"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Book a live check"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "textarea",
+      "id": "note",
+      "label": "Footnote",
+      "default": "On the call you can open Task Manager, Device Manager or run CrystalDiskInfo. It's the same unit that lands at your door."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Pick a laptop"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Each listing shows its own AnyDesk ID and computer name."
+        }
+      ]
+    },
+    {
+      "type": "check",
+      "name": "Health row",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "CPU"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "default": "97%"
+        },
+        {
+          "type": "range",
+          "id": "percent",
+          "label": "Bar fill",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 97
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Umar verify (AnyDesk)",
+      "blocks": [
+        { "type": "step" },
+        { "type": "step" },
+        { "type": "step" },
+        { "type": "check" },
+        { "type": "check" },
+        { "type": "check" }
+      ]
+    }
+  ]
+}
+{% endschema %}

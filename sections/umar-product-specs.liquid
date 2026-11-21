@@ -1,0 +1,236 @@
+{%- liquid
+  assign s = product.metafields.specs
+  assign h = product.metafields.health
+
+  assign cpu = s.cpu.value
+  assign gpu = s.gpu.value
+  assign ram = s.ram.value
+  assign storage = s.storage.value
+  assign display = s.display.value
+  assign panel = s.panel.value
+  assign refresh = s.refresh.value
+  assign brightness = s.brightness.value
+  assign weight = s.weight.value
+  assign keyboard = s.keyboard.value
+  assign ports = s.ports.value
+  assign os = s.os.value
+  assign condition = s.condition.value
+  assign cosmetic = s.cosmetic.value
+  assign warranty = s.warranty.value
+  assign tested_on = s.tested_on.value
+  assign box = s.box.value
+  assign accessories = s.accessories.value
+  assign extras = s.extras.value
+  assign charger = s.charger.value
+  assign health_note = h.note.value
+
+  assign battery = h.battery.value
+  assign cycles = h.cycles.value
+  assign runtime = h.runtime.value
+  assign ssd_life = h.ssd_life.value
+  assign perf_score = h.perf.value
+
+  assign group_1 = false
+  if cpu != blank or gpu != blank or ram != blank or storage != blank
+    assign group_1 = true
+  endif
+  assign group_2 = false
+  if display != blank or panel != blank or refresh != blank or brightness != blank
+    assign group_2 = true
+  endif
+  assign group_3 = false
+  if battery != blank or cycles != blank or runtime != blank or charger != blank
+    assign group_3 = true
+  endif
+  assign group_4 = false
+  if weight != blank or keyboard != blank or ports != blank or os != blank
+    assign group_4 = true
+  endif
+  assign group_5 = false
+  if condition != blank or cosmetic != blank or warranty != blank or tested_on != blank
+    assign group_5 = true
+  endif
+  assign group_6 = false
+  if box != blank or accessories != blank or extras != blank
+    assign group_6 = true
+  endif
+
+  assign battery_pct = battery | plus: 0
+  assign ssd_pct = ssd_life | plus: 0
+  assign perf_pct = perf_score | plus: 0
+  assign has_health = false
+  if battery != blank or ssd_life != blank or perf_score != blank
+    assign has_health = true
+  endif
+-%}
+
+<div class="u-section u-section--tight">
+  <div class="u-wrap u-wrap--pdp">
+    <div class="u-specshell">
+      <div class="u-subhead">
+        <div>
+          <span class="u-eyebrow">Full disclosure</span>
+          <h2>{{ section.settings.heading }}</h2>
+          <p>{{ section.settings.subtext }}</p>
+        </div>
+        {%- if section.settings.link_label != blank -%}
+          <a
+            class="u-linkarrow"
+            href="{{ section.settings.link | default: 'https://wa.me/923104561634' }}"
+            rel="noopener"
+          >
+            {{- section.settings.link_label | escape -}}
+            {% render 'umar-icon', name: 'external' %}
+          </a>
+        {%- endif -%}
+      </div>
+
+      <div class="u-specgrid">
+        {%- if group_1 -%}
+          <div class="u-spec">
+            <h4>{% render 'umar-icon', name: 'cpu' %}Performance</h4>
+            <dl>
+              {%- if cpu != blank -%}<div class="u-row"><dt>Processor</dt><dd>{{ cpu }}</dd></div>{%- endif -%}
+              {%- if gpu != blank -%}<div class="u-row"><dt>Graphics</dt><dd>{{ gpu }}</dd></div>{%- endif -%}
+              {%- if ram != blank -%}<div class="u-row"><dt>Memory</dt><dd>{{ ram }}</dd></div>{%- endif -%}
+              {%- if storage != blank -%}<div class="u-row"><dt>Storage</dt><dd>{{ storage }}</dd></div>{%- endif -%}
+            </dl>
+          </div>
+        {%- endif -%}
+
+        {%- if group_2 -%}
+          <div class="u-spec">
+            <h4>{% render 'umar-icon', name: 'monitor' %}Display</h4>
+            <dl>
+              {%- if display != blank -%}<div class="u-row"><dt>Screen</dt><dd>{{ display }}</dd></div>{%- endif -%}
+              {%- if panel != blank -%}<div class="u-row"><dt>Panel</dt><dd>{{ panel }}</dd></div>{%- endif -%}
+              {%- if refresh != blank -%}<div class="u-row"><dt>Refresh</dt><dd>{{ refresh }}</dd></div>{%- endif -%}
+              {%- if brightness != blank -%}<div class="u-row"><dt>Brightness</dt><dd>{{ brightness }}</dd></div>{%- endif -%}
+            </dl>
+          </div>
+        {%- endif -%}
+
+        {%- if group_3 -%}
+          <div class="u-spec">
+            <h4>{% render 'umar-icon', name: 'battery' %}Battery &amp; power</h4>
+            <dl>
+              {%- if battery != blank -%}<div class="u-row"><dt>Health</dt><dd>{{ battery }}%</dd></div>{%- endif -%}
+              {%- if cycles != blank -%}<div class="u-row"><dt>Cycle count</dt><dd>{{ cycles }}</dd></div>{%- endif -%}
+              {%- if runtime != blank -%}<div class="u-row"><dt>Real runtime</dt><dd>{{ runtime }}</dd></div>{%- endif -%}
+              {%- if charger != blank -%}<div class="u-row"><dt>Charger</dt><dd>{{ charger }}</dd></div>{%- endif -%}
+            </dl>
+          </div>
+        {%- endif -%}
+
+        {%- if group_4 -%}
+          <div class="u-spec">
+            <h4>{% render 'umar-icon', name: 'weight' %}Build</h4>
+            <dl>
+              {%- if weight != blank -%}<div class="u-row"><dt>Weight</dt><dd>{{ weight }}</dd></div>{%- endif -%}
+              {%- if keyboard != blank -%}<div class="u-row"><dt>Keyboard</dt><dd>{{ keyboard }}</dd></div>{%- endif -%}
+              {%- if ports != blank -%}<div class="u-row"><dt>Ports</dt><dd>{{ ports }}</dd></div>{%- endif -%}
+              {%- if os != blank -%}<div class="u-row"><dt>Operating system</dt><dd>{{ os }}</dd></div>{%- endif -%}
+            </dl>
+          </div>
+        {%- endif -%}
+
+        {%- if group_5 -%}
+          <div class="u-spec">
+            <h4>{% render 'umar-icon', name: 'shield' %}Condition</h4>
+            <dl>
+              {%- if condition != blank -%}<div class="u-row"><dt>Grade</dt><dd>{{ condition }}</dd></div>{%- endif -%}
+              {%- if cosmetic != blank -%}<div class="u-row"><dt>Cosmetic notes</dt><dd>{{ cosmetic }}</dd></div>{%- endif -%}
+              {%- if warranty != blank -%}<div class="u-row"><dt>Warranty</dt><dd>{{ warranty }}</dd></div>{%- endif -%}
+              {%- if tested_on != blank -%}<div class="u-row"><dt>Bench tested</dt><dd>{{ tested_on }}</dd></div>{%- endif -%}
+            </dl>
+          </div>
+        {%- endif -%}
+
+        {%- if group_6 -%}
+          <div class="u-spec">
+            <h4>{% render 'umar-icon', name: 'layers' %}In the box</h4>
+            <dl>
+              {%- if box != blank -%}<div class="u-row"><dt>Packaging</dt><dd>{{ box }}</dd></div>{%- endif -%}
+              {%- if accessories != blank -%}<div class="u-row"><dt>Included</dt><dd>{{ accessories }}</dd></div>{%- endif -%}
+              {%- if extras != blank -%}<div class="u-row"><dt>Extras</dt><dd>{{ extras }}</dd></div>{%- endif -%}
+            </dl>
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- if group_1 == false and group_2 == false and group_3 == false and group_4 == false and group_5 == false and group_6 == false -%}
+        <p class="u-spec-empty">
+          Full spec sheet and health report are filled in per unit under the <code>specs.*</code> and <code>health.*</code>
+          metafields. Until then, request the report on WhatsApp.
+        </p>
+      {%- endif -%}
+
+      {%- if has_health -%}
+        <div class="u-health">
+          <div class="u-health__grid">
+            {%- if battery != blank -%}
+              <div class="u-hm">
+                <small>{% render 'umar-icon', name: 'battery' %}Battery health</small>
+                <b>{{ battery }}<em>% of design capacity</em></b>
+                <span class="u-bar"><i style="width: {{ battery_pct | at_most: 100 }}%"></i></span>
+                {%- if cycles != blank -%}<p>{{ cycles }} charge cycles</p>{%- endif -%}
+              </div>
+            {%- endif -%}
+            {%- if ssd_life != blank -%}
+              <div class="u-hm u-hm--cyan">
+                <small>{% render 'umar-icon', name: 'ssd' %}SSD life</small>
+                <b>{{ ssd_life }}<em>% health remaining</em></b>
+                <span class="u-bar"><i style="width: {{ ssd_pct | at_most: 100 }}%"></i></span>
+                {%- if storage != blank -%}<p>{{ storage }}</p>{%- endif -%}
+              </div>
+            {%- endif -%}
+            {%- if perf_score != blank -%}
+              <div class="u-hm u-hm--violet">
+                <small>{% render 'umar-icon', name: 'chart' %}Bench score</small>
+                <b>{{ perf_score }}<em>of 100</em></b>
+                <span class="u-bar"><i style="width: {{ perf_pct | at_most: 100 }}%"></i></span>
+                {%- if runtime != blank -%}<p>Battery runtime: {{ runtime }}</p>{%- endif -%}
+              </div>
+            {%- endif -%}
+          </div>
+          {%- if health_note != blank -%}
+            <p class="u-health__note">{{ health_note }}</p>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Umar product specs",
+  "tag": "section",
+  "class": "umar-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Every component, out in the open."
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Pulled from the unit's own metafields and bench report — the CPU, memory, SSD health and battery numbers are the ones we measured, not the ones on the box."
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Link label",
+      "default": "Request the full report"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Link"
+    }
+  ]
+}
+{% endschema %}

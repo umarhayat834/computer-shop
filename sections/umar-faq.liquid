@@ -1,0 +1,143 @@
+<div class="u-section" id="faq">
+  <div class="u-wrap">
+    <div class="u-sechead">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="u-eyebrow">{{ section.settings.eyebrow }}</span>
+        {%- endif -%}
+        <h2 class="u-h2">{{ section.settings.heading }}</h2>
+        {%- if section.settings.subtext != blank -%}
+          <p>{{ section.settings.subtext }}</p>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.support_label != blank -%}
+        <a
+          class="u-linkarrow"
+          href="{{ section.settings.support_link | default: 'https://wa.me/923104561634' }}"
+          rel="noopener"
+        >
+          {{- section.settings.support_label | escape -}}
+          {% render 'umar-icon', name: 'whatsapp' %}
+        </a>
+      {%- endif -%}
+    </div>
+
+    <div class="u-faq">
+      {%- for block in section.blocks -%}
+        <details {% if forloop.first %}open{% endif %} {{ block.shopify_attributes }}>
+          <summary>{{ block.settings.question | escape }}</summary>
+          <div class="u-faq__a rte">{{ block.settings.answer }}</div>
+        </details>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Umar FAQ",
+  "tag": "section",
+  "class": "umar-section",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Straight answers"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Questions people ask before buying."
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "If something isn't covered here, message us on WhatsApp — usually answers in minutes."
+    },
+    {
+      "type": "text",
+      "id": "support_label",
+      "label": "Support link label",
+      "default": "Ask on WhatsApp"
+    },
+    {
+      "type": "url",
+      "id": "support_link",
+      "label": "Support link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "How does the AnyDesk check work?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Each laptop has its own AnyDesk ID. Message us, we connect to that exact unit, and you inspect it live — CPU, GPU, RAM, SSD health, battery, everything.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Umar FAQ",
+      "blocks": [
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Can I really check the specs before paying?",
+            "answer": "<p>Yes. Every laptop has its own AnyDesk ID and computer name. Book a five-minute session and we connect you to that exact machine — you can open Task Manager, Device Manager or run CrystalDiskInfo yourself.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "What does \"battery health 94%\" mean?",
+            "answer": "<p>It compares the battery's current capacity with its original design capacity. 94% means the battery still holds 94% of what it did when new. We also list the cycle count and real screen-on time.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Is the SSD really 1 TB?",
+            "answer": "<p>We photograph the CrystalDiskInfo readout for each unit. You'll see the exact model, capacity, power-on hours and SSD life percentage — not just what the listing says.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Do you deliver outside Lahore?",
+            "answer": "<p>Yes. Cash on delivery across Pakistan, with same-day delivery inside Lahore. Outstation orders are booked with a tracked courier and usually arrive in 2–3 working days.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "What warranty do I get?",
+            "answer": "<p>Every unit includes our 14-day no-questions return window and a 30-day workshop warranty covering hardware faults. Extended warranty is available on select units — ask us before ordering.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "How do I pay?",
+            "answer": "<p>Cash on delivery, bank transfer or JazzCash. For COD, you can inspect the laptop at the door before handing over the money.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

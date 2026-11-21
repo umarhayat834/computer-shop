@@ -1,0 +1,95 @@
+<div class="u-trust">
+  {%- for block in section.blocks -%}
+    <div class="u-trust__item" {{ block.shopify_attributes }}>
+      <span class="u-iconbox">{% render 'umar-icon', name: block.settings.icon %}</span>
+      <div>
+        <b>{{ block.settings.title | escape }}</b>
+        <small>{{ block.settings.caption | escape }}</small>
+      </div>
+    </div>
+  {%- endfor -%}
+</div>
+
+{% schema %}
+{
+  "name": "Umar trust strip",
+  "tag": "section",
+  "class": "umar-section",
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Trust item",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "shield", "label": "Shield" },
+            { "value": "truck", "label": "Truck" },
+            { "value": "refresh", "label": "Refresh" },
+            { "value": "headset", "label": "Headset" },
+            { "value": "battery", "label": "Battery" },
+            { "value": "cpu", "label": "CPU" },
+            { "value": "lock", "label": "Lock" },
+            { "value": "star", "label": "Star" }
+          ],
+          "default": "shield"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "AnyDesk verified"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption",
+          "default": "Check the specs yourself"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Umar trust strip",
+      "blocks": [
+        {
+          "type": "item",
+          "settings": {
+            "icon": "shield",
+            "title": "AnyDesk verified",
+            "caption": "Check the specs yourself"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "battery",
+            "title": "Battery health tested",
+            "caption": "Reported on every unit"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "refresh",
+            "title": "14-day returns",
+            "caption": "No questions asked"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "truck",
+            "title": "COD delivery",
+            "caption": "Same day in Lahore"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

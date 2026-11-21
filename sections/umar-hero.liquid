@@ -1,0 +1,285 @@
+{%- liquid
+  assign primary_url = section.settings.button_link
+  if primary_url == blank
+    assign primary_url = routes.all_products_collection_url
+  endif
+  assign secondary_url = section.settings.button_2_link | default: '#verify'
+  assign ticker_items = section.settings.ticker | newline_to_br | split: '<br />'
+-%}
+
+<section class="u-hero">
+  <div class="u-hero__in">
+    <div class="u-hero__copy">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="u-eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      <h1 class="u-hero__title">{{ section.settings.heading }}</h1>
+      {%- if section.settings.subtext != blank -%}
+        <p class="u-hero__sub">{{ section.settings.subtext }}</p>
+      {%- endif -%}
+      <div class="u-hero__cta">
+        {%- if section.settings.button_label != blank -%}
+          <a class="u-btn u-btn--lime u-btn--lg" href="{{ primary_url }}">
+            {{- section.settings.button_label | escape -}}
+            {% render 'umar-icon', name: 'arrow' %}
+          </a>
+        {%- endif -%}
+        {%- if section.settings.button_2_label != blank -%}
+          <a class="u-btn u-btn--ghost u-btn--lg" href="{{ secondary_url }}">
+            {%- if section.settings.button_2_icon -%}
+              {% render 'umar-icon', name: section.settings.button_2_icon %}
+            {%- endif -%}
+            {{- section.settings.button_2_label | escape -}}
+          </a>
+        {%- endif -%}
+      </div>
+      <div class="u-hero__micro">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'micro' -%}
+            <span {{ block.shopify_attributes }}>
+              {% render 'umar-icon', name: block.settings.icon %}
+              {{- block.settings.text | escape -}}
+            </span>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <div class="u-stage">
+      <div class="u-stage__grid" aria-hidden="true"></div>
+      <div class="u-stage__aurora" aria-hidden="true"></div>
+
+      {% render 'umar-laptop',
+        root_class: 'u-lap--back-l',
+        variant: 'silver',
+        wallpaper: 2
+      %}
+      {% render 'umar-laptop',
+        root_class: 'u-lap--back-r',
+        variant: 'black',
+        wallpaper: 3
+      %}
+
+      {%- assign hud_cells = section.blocks | where: 'type', 'hud' -%}
+      {%- assign hud_1 = hud_cells[0].settings -%}
+      {%- assign hud_2 = hud_cells[1].settings -%}
+      {%- assign hud_3 = hud_cells[2].settings -%}
+      {%- assign hud_4 = hud_cells[3].settings -%}
+
+      {% render 'umar-laptop',
+        root_class: 'u-lap--front',
+        variant: 'space',
+        wallpaper: 1,
+        hud: true,
+        hud_title: section.settings.hud_title,
+        hud_cpu: hud_1.value,
+        hud_cpu_note: hud_1.note,
+        hud_gpu: hud_2.value,
+        hud_gpu_note: hud_2.note,
+        hud_ram: hud_3.value,
+        hud_ram_note: hud_3.note,
+        hud_ssd: hud_4.value,
+        hud_ssd_note: hud_4.note,
+        meter_label: section.settings.meter_label,
+        meter_value: section.settings.meter_value,
+        meter_pct: section.settings.meter_pct
+      %}
+
+      <div class="u-floatchip u-floatchip--a"><i></i>{{ section.settings.chip_a | escape }}</div>
+      <div class="u-floatchip u-floatchip--b"><i></i>{{ section.settings.chip_b | escape }}</div>
+      <div class="u-floatchip u-floatchip--c"><i></i>{{ section.settings.chip_c | escape }}</div>
+    </div>
+  </div>
+
+  {%- if section.settings.ticker != blank -%}
+    <div class="u-ticker" aria-hidden="true">
+      <div class="u-ticker__track">
+        {%- for pass in (1..2) -%}
+          {%- for item in ticker_items -%}
+            <span><b>{{ item | strip }}</b><em>·</em></span>
+          {%- endfor -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Umar hero",
+  "tag": "section",
+  "class": "umar-section",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Certified refurbished · Lahore"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Laptops that <em>outrun</em> the spec sheet."
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Hand-picked business and gaming laptops, tested component by component. Every unit ships with its own AnyDesk ID so you can check the specs yourself before you pay."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Primary button label",
+      "default": "Shop the lineup"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Primary button link"
+    },
+    {
+      "type": "text",
+      "id": "button_2_label",
+      "label": "Secondary button label",
+      "default": "How verification works"
+    },
+    {
+      "type": "url",
+      "id": "button_2_link",
+      "label": "Secondary button link"
+    },
+    {
+      "type": "select",
+      "id": "button_2_icon",
+      "label": "Secondary button icon",
+      "options": [
+        { "value": "", "label": "None" },
+        { "value": "shield", "label": "Shield" },
+        { "value": "play", "label": "Play" },
+        { "value": "search", "label": "Search" },
+        { "value": "laptop", "label": "Laptop" },
+        { "value": "wifi", "label": "Signal" }
+      ],
+      "default": "shield"
+    },
+    {
+      "type": "text",
+      "id": "hud_title",
+      "label": "Screen HUD title",
+      "default": "UMAR · LIVE SPEC"
+    },
+    {
+      "type": "text",
+      "id": "meter_label",
+      "label": "HUD meter label",
+      "default": "BATTERY"
+    },
+    {
+      "type": "text",
+      "id": "meter_value",
+      "label": "HUD meter value",
+      "default": "94%"
+    },
+    {
+      "type": "range",
+      "id": "meter_pct",
+      "label": "HUD meter fill",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 94
+    },
+    {
+      "type": "text",
+      "id": "chip_a",
+      "label": "Floating chip 1",
+      "default": "AnyDesk ready"
+    },
+    {
+      "type": "text",
+      "id": "chip_b",
+      "label": "Floating chip 2",
+      "default": "Battery 94%"
+    },
+    {
+      "type": "text",
+      "id": "chip_c",
+      "label": "Floating chip 3",
+      "default": "1 TB NVMe"
+    },
+    {
+      "type": "textarea",
+      "id": "ticker",
+      "label": "Ticker items (one per line)",
+      "default": "AnyDesk verified before dispatch\n14-day no-questions returns\nSame-day delivery in Lahore\nCash on delivery available\nBattery health tested on every unit"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "micro",
+      "name": "Trust note",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "check", "label": "Check" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "truck", "label": "Truck" },
+            { "value": "refresh", "label": "Refresh" },
+            { "value": "bolt", "label": "Bolt" },
+            { "value": "headset", "label": "Headset" },
+            { "value": "wifi", "label": "Signal" },
+            { "value": "lock", "label": "Lock" }
+          ],
+          "default": "shield"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "AnyDesk verified"
+        }
+      ]
+    },
+    {
+      "type": "hud",
+      "name": "Spec HUD cell",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "default": "i7-12700H"
+        },
+        {
+          "type": "text",
+          "id": "note",
+          "label": "Note",
+          "default": "14C / 20T · 4.7GHz"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Umar hero",
+      "blocks": [
+        { "type": "micro" },
+        { "type": "micro" },
+        { "type": "micro" },
+        { "type": "hud" },
+        { "type": "hud" },
+        { "type": "hud" },
+        { "type": "hud" }
+      ]
+    }
+  ]
+}
+{% endschema %}

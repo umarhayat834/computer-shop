@@ -1,0 +1,92 @@
+<div class="u-section u-section--flush">
+  <div class="u-bandwrap">
+    <div class="u-band">
+      <div class="u-band__in">
+        <div>
+          {%- if section.settings.eyebrow != blank -%}
+            <span class="u-eyebrow">{{ section.settings.eyebrow }}</span>
+          {%- endif -%}
+          <h2>{{ section.settings.heading }}</h2>
+          {%- if section.settings.text != blank -%}
+            <p>{{ section.settings.text }}</p>
+          {%- endif -%}
+        </div>
+        <div class="u-band__cta">
+          {%- if section.settings.button_label != blank -%}
+            <a
+              class="u-btn u-btn--lime"
+              href="{{ section.settings.button_link | default: 'https://wa.me/923104561634' }}"
+              rel="noopener"
+            >
+              {{- section.settings.button_label | escape -}}
+              {% render 'umar-icon', name: 'external' %}
+            </a>
+          {%- endif -%}
+          {%- if section.settings.button_2_label != blank -%}
+            <a
+              class="u-btn u-btn--ghost"
+              href="{{ section.settings.button_2_link | default: routes.all_products_collection_url }}"
+            >
+              {{- section.settings.button_2_label | escape -}}
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Umar CTA band",
+  "tag": "section",
+  "class": "umar-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Zero-risk purchase"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "See the machine live before you pay."
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "Book a five-minute AnyDesk session on any laptop in stock. Check the specs, stress-test it, then decide. No deposit, no pressure."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Primary button label",
+      "default": "Book a live check"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Primary button link"
+    },
+    {
+      "type": "text",
+      "id": "button_2_label",
+      "label": "Secondary button label",
+      "default": "Shop the lineup"
+    },
+    {
+      "type": "url",
+      "id": "button_2_link",
+      "label": "Secondary button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Umar CTA band"
+    }
+  ]
+}
+{% endschema %}
