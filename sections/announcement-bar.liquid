@@ -1,0 +1,313 @@
+{%- liquid
+  assign total = section.blocks.size
+-%}
+
+{%- if total > 0 -%}
+  <div
+    class="announcement-bar announcement-bar--tech gradient{% if section.settings.enable_animation %} is-animated{% endif %}"
+    role="region"
+    aria-label="{{ 'sections.header.announcement' | t }}"
+    data-ab-slider
+    data-delay="{{ section.settings.delay | times: 1000 }}"
+  >
+    <div class="announcement-bar__track">
+      {%- for block in section.blocks -%}
+        {%- if block.settings.text != blank -%}
+          <div
+            class="announcement-bar__slide{% if forloop.first %} is-active{% endif %}"
+            data-ab-slide
+            {{ block.shopify_attributes }}
+          >
+            {%- if block.settings.link != blank -%}
+              <a href="{{ block.settings.link }}" class="announcement-bar__link link link--text focus-inset animate-arrow">
+            {%- endif -%}
+                <div class="page-width">
+                  <p class="announcement-bar__message {{ block.settings.text_alignment }} h5">
+                    <span class="announcement-bar__dot" aria-hidden="true"></span>
+                    <span class="announcement-bar__text">{{ block.settings.text | escape }}</span>
+                    {%- if block.settings.link != blank -%}
+                      <span class="announcement-bar__arrow">{% render 'icon-arrow' %}</span>
+                    {%- endif -%}
+                  </p>
+                </div>
+            {%- if block.settings.link != blank -%}
+              </a>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  /* ---------- Bar + animated gradient ---------- */
+  .announcement-bar.announcement-bar--tech {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(120deg, #0f2027, #1d4ed8, #7c3aed, #06b6d4, #0f2027);
+    background-size: 300% 300%;
+    color: #fff;
+  }
+
+  .announcement-bar--tech::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+    background-size: 24px 24px;
+    pointer-events: none;
+  }
+
+  .announcement-bar--tech::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -60%;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+    transform: skewX(-20deg);
+    pointer-events: none;
+  }
+
+  /* ---------- One-at-a-time slider ---------- */
+  .announcement-bar__track {
+    position: relative;
+    display: grid;          /* all slides share one cell, so height = tallest slide */
+    z-index: 1;
+  }
+
+  .announcement-bar__slide {
+    grid-area: 1 / 1;
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  .announcement-bar__slide.is-active {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .announcement-bar--tech .announcement-bar__message,
+  .announcement-bar--tech .announcement-bar__link,
+  .announcement-bar--tech svg {
+    color: #fff;
+  }
+
+  .announcement-bar--tech .announcement-bar__message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    margin: 0;
+    padding: 1rem 0;
+  }
+
+  .announcement-bar--tech .announcement-bar__message.left  { justify-content: flex-start; }
+  .announcement-bar--tech .announcement-bar__message.right { justify-content: flex-end; }
+
+  .announcement-bar__dot {
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 50%;
+    background: #22d3ee;
+    flex-shrink: 0;
+  }
+
+  .announcement-bar__arrow { display: inline-flex; }
+
+  .announcement-bar--tech .announcement-bar__link:hover .announcement-bar__text {
+    text-shadow: 0 0 12px rgba(34, 211, 238, 0.9);
+  }
+
+  /* ---------- Animations ---------- */
+  .announcement-bar--tech.is-animated { animation: ab-gradient-shift 10s ease infinite; }
+  .announcement-bar--tech.is-animated::before { animation: ab-grid-move 12s linear infinite; }
+  .announcement-bar--tech.is-animated::after { animation: ab-shimmer 5s ease-in-out infinite; }
+  .announcement-bar--tech.is-animated .announcement-bar__dot { animation: ab-pulse 1.6s ease-out infinite; }
+  .announcement-bar--tech.is-animated .announcement-bar__arrow { animation: ab-arrow-nudge 1.4s ease-in-out infinite; }
+
+  /* Slide in / out */
+  .announcement-bar--tech.is-animated .announcement-bar__slide.is-active {
+    animation: ab-slide-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .announcement-bar--tech.is-animated .announcement-bar__slide.is-leaving {
+    visibility: visible;
+    animation: ab-slide-out 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @keyframes ab-slide-in {
+    from { transform: translateY(100%); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+  }
+
+  @keyframes ab-slide-out {
+    from { transform: translateY(0);     opacity: 1; }
+    to   { transform: translateY(-100%); opacity: 0; }
+  }
+
+  @keyframes ab-gradient-shift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  @keyframes ab-shimmer {
+    0%        { left: -60%; }
+    60%, 100% { left: 130%; }
+  }
+
+  @keyframes ab-grid-move {
+    from { background-position: 0 0; }
+    to   { background-position: 24px 24px; }
+  }
+
+  @keyframes ab-pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.7); }
+    70%  { box-shadow: 0 0 0 10px rgba(34, 211, 238, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(34, 211, 238, 0); }
+  }
+
+  @keyframes ab-arrow-nudge {
+    0%, 100% { transform: translateX(0); }
+    50%      { transform: translateX(6px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .announcement-bar--tech.is-animated,
+    .announcement-bar--tech.is-animated::before,
+    .announcement-bar--tech.is-animated::after,
+    .announcement-bar--tech.is-animated .announcement-bar__dot,
+    .announcement-bar--tech.is-animated .announcement-bar__arrow,
+    .announcement-bar--tech.is-animated .announcement-bar__slide.is-active,
+    .announcement-bar--tech.is-animated .announcement-bar__slide.is-leaving {
+      animation: none;
+    }
+  }
+{% endstylesheet %}
+
+<script>
+  (function () {
+    var bar = document.currentScript.previousElementSibling;
+    // Walk back to the slider root (stylesheet tag renders nothing, but be safe)
+    while (bar && !(bar.hasAttribute && bar.hasAttribute('data-ab-slider'))) {
+      bar = bar.previousElementSibling;
+    }
+    if (!bar || bar.dataset.abInit) return;
+    bar.dataset.abInit = 'true';
+
+    var slides = bar.querySelectorAll('[data-ab-slide]');
+    if (slides.length < 2) return;
+
+    var delay = parseInt(bar.dataset.delay, 10) || 5000;
+    var current = 0;
+    var timer = null;
+
+    function show(next) {
+      var prev = slides[current];
+      prev.classList.remove('is-active');
+      prev.classList.add('is-leaving');
+      setTimeout(function () { prev.classList.remove('is-leaving'); }, 650);
+
+      current = next;
+      slides[current].classList.add('is-active');
+    }
+
+    function start() {
+      stop();
+      timer = setInterval(function () {
+        show((current + 1) % slides.length);
+      }, delay);
+    }
+
+    function stop() {
+      if (timer) { clearInterval(timer); timer = null; }
+    }
+
+    bar.addEventListener('mouseenter', stop);
+    bar.addEventListener('mouseleave', start);
+    bar.addEventListener('focusin', stop);
+    bar.addEventListener('focusout', start);
+
+    // Pause when the tab is hidden
+    document.addEventListener('visibilitychange', function () {
+      document.hidden ? stop() : start();
+    });
+
+    start();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "t:sections.announcement-bar.name",
+  "max_blocks": 12,
+  "class": "announcement-bar-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_animation",
+      "default": true,
+      "label": "Enable animations"
+    },
+    {
+      "type": "range",
+      "id": "delay",
+      "min": 3,
+      "max": 12,
+      "step": 1,
+      "unit": "s",
+      "default": 5,
+      "label": "Seconds each message is shown"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "announcement",
+      "name": "t:sections.announcement-bar.blocks.announcement.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "default": "Welcome to our store",
+          "label": "t:sections.announcement-bar.blocks.announcement.settings.text.label"
+        },
+        {
+          "type": "select",
+          "id": "text_alignment",
+          "options": [
+            {
+              "value": "left",
+              "label": "t:sections.announcement-bar.blocks.announcement.settings.text_alignment.options__1.label"
+            },
+            {
+              "value": "center",
+              "label": "t:sections.announcement-bar.blocks.announcement.settings.text_alignment.options__2.label"
+            },
+            {
+              "value": "right",
+              "label": "t:sections.announcement-bar.blocks.announcement.settings.text_alignment.options__3.label"
+            }
+          ],
+          "default": "center",
+          "label": "t:sections.announcement-bar.blocks.announcement.settings.text_alignment.label"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "t:sections.announcement-bar.blocks.announcement.settings.link.label"
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "announcement" }
+    ]
+  }
+}
+{% endschema %}
